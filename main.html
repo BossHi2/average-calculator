@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Average</title>
+</head>
+<body>
+    <div id="select">
+        <h1 id="selectAP">Select One</h1>
+        <button id="AP" onclick="yesAP()">AP Course</button>
+        <button id="noAP" onclick="noAP()">Non AP Course</button>
+    </div>
+    
+    <div id="gradeCalc">
+        <h5 class= "noAp major" id="majorNoAP">Major Grade (60%)</h1>
+        <textarea class= "noAp" id="majorText1"></textarea>
+        <textarea class= "noAp"  id="majorText2"></textarea>
+        <textarea class= "noAp"  id="majorText3"></textarea>
+        <textarea class= "noAp"  id="majorText4"></textarea>
+        <textarea class= "noAp"  id="majorText5"></textarea>
+
+        <h5 class= "noAp minor"  id="minorNoAP">Minor Grade (30%)</h1>
+        <textarea class= "noAp"  id="minorText1"></textarea>
+        <textarea class= "noAp"  id="minorText2"></textarea>
+        <textarea class= "noAp"  id="minorText3"></textarea>
+        <textarea class= "noAp"  id="minorText4"></textarea>
+        <textarea class= "noAp"  id="minorText5"></textarea>
+
+        <h5 class= "noAp other"  id="otherNoAP">Other Grade (10%)</h1>
+        <textarea class= "noAp"  id="otherText1"></textarea>
+        <textarea class= "noAp"  id="otherText2"></textarea>
+        <textarea class= "noAp"  id="otherText3"></textarea>
+        <textarea class= "noAp"  id="otherText4"></textarea>
+        <textarea class= "noAp"  id="otherText5"></textarea>
+
+
+        <h5 class= "yesAP major" id="majorYesAP">Major Grade (70%)</h1>
+        <h5 class= "yesAP minor"  id="minorYesAP">Minor Grade (20%)</h1>
+        <h5 class= "yesAP other"  id="otherYesAP">Other Grade (10%)</h1>
+    </div>
+
+    <button id="calculate" onclick="calculateScore()">Calculate!</button>
+    <h1 id="score">Class Average:</h1>
+    
+
+
+    <style>
+        body{
+            font-family: fantasy;
+        }
+        #select{
+            height: 220px;
+        }
+        #gradeCalc{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            grid-row: 1fr 1fr 1fr 1fr 1fr 1fr;
+            gap: 10px;
+        }
+        #score{
+            text-align: center;
+        }
+
+        #calculate{
+            position: relative;
+            left: 50%;
+            width: 10%;
+            height: 40px;
+            border-radius: 10px;
+            background-color: rgb(232, 202, 252);
+        }
+
+        .major{
+            grid-column: 2;
+        }
+        #majorText1{
+            grid-column: 2;
+            grid-row: 2;
+        }
+        #majorText2{
+            grid-column: 2;
+            grid-row: 3;
+        }
+        #majorText3{
+            grid-column: 2;
+            grid-row: 4;
+        }
+        #majorText4{
+            grid-column: 2;
+            grid-row: 5;
+        }
+        #majorText5{
+            grid-column: 2;
+            grid-row: 6;
+        }
+
+        .minor{
+            grid-column: 3;
+            
+        }
+        #minorText1{
+            grid-column: 3;
+            grid-row: 2;
+        }
+        #minorText2{
+            grid-column: 3;
+            grid-row: 3;
+        }
+        #minorText3{
+            grid-column: 3;
+            grid-row: 4;
+        }
+        #minorText4{
+            grid-column: 3;
+            grid-row: 5;
+        }
+        #minorText5{
+            grid-column: 3;
+            grid-row: 6;
+        }
+        .other{
+            grid-column: 4;
+            
+        }
+        #otherText1{
+            grid-column: 4;
+            grid-row: 2;
+        }
+        #otherText2{
+            grid-column: 4;
+            grid-row: 3;
+        }
+        #otherText3{
+            grid-column: 4;
+            grid-row: 4;
+        }
+        #otherText4{
+            grid-column: 4;
+            grid-row: 5;
+        }
+        #otherText5{
+            grid-column: 4;
+            grid-row: 6;
+        }
+
+        #selectAP{
+            text-align: center;
+        }
+        #AP{
+            position: absolute;
+            top: 20%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+
+            width: 10%;
+            height: 10%;
+            border-radius: 10px;
+            background-color: rgb(232, 202, 252);
+        }
+        #noAP{
+            position: absolute;
+            top: 20%;
+            left: 70%;
+            transform: translate(-50%, -50%);
+            width: 10%;
+            height: 10%;
+            border-radius: 10px;
+            background-color: rgb(232, 202, 252);
+        }
+    </style>
+
+    <script>
+        var isAP = false;
+        const majorNoAP = document.getElementById("majorNoAP");
+        const minorNoAP = document.getElementById("minorNoAP");
+        const otherNoAP = document.getElementById("otherNoAP");
+
+        const majorYesAP = document.getElementById("majorYesAP");
+        const minorYesAP = document.getElementById("minorYesAP");
+        const otherYesAP = document.getElementById("otherYesAP");
+
+        const majorText1 = document.getElementById("majorText1");
+        const majorText2 = document.getElementById("majorText2");
+        const majorText3 = document.getElementById("majorText3");
+        const majorText4 = document.getElementById("majorText4");
+        const majorText5 = document.getElementById("majorText5");
+
+        const minorText1 = document.getElementById("minorText1");
+        const minorText2 = document.getElementById("minorText2");
+        const minorText3 = document.getElementById("minorText3");
+        const minorText4 = document.getElementById("minorText4");
+        const minorText5 = document.getElementById("minorText5");
+
+        const otherText1 = document.getElementById("otherText1");
+        const otherText2 = document.getElementById("otherText2");
+        const otherText3 = document.getElementById("otherText3");
+        const otherText4 = document.getElementById("otherText4");
+        const otherText5 = document.getElementById("otherText5");
+
+        const APButton = document.getElementById("AP");
+        const noAPButton = document.getElementById("noAP");
+
+        const score = document.getElementById("score");
+
+        var majorGrades = [];
+        var minorGrades = [];
+        var otherGrades = [];
+
+        function start(){
+            majorNoAP.hidden = true;
+            minorNoAP.hidden = true;
+            otherNoAP.hidden = true;
+
+            majorYesAP.hidden = true;
+            minorYesAP.hidden = true;
+            otherYesAP.hidden = true;
+        }
+        start();
+        function yesAP(){
+            isAP = true;
+            APButton.style.backgroundColor="rgb(202, 218, 252)";
+            noAPButton.style.backgroundColor="rgb(232, 202, 252)";
+            update();
+        }
+
+        function noAP(){
+            isAP = false;
+            noAPButton.style.backgroundColor="rgb(202, 218, 252)";
+            APButton.style.backgroundColor="rgb(232, 202, 252)";
+            update();
+        }
+
+        function update(){
+            if(isAP == false){
+                majorNoAP.hidden = false;
+                minorNoAP.hidden = false;
+                otherNoAP.hidden = false;
+
+                majorYesAP.hidden = true;
+                minorYesAP.hidden = true;
+                otherYesAP.hidden = true;
+            } else if(isAP == true){
+                majorNoAP.hidden = true;
+                minorNoAP.hidden = true;
+                otherNoAP.hidden = true;
+
+                majorYesAP.hidden = false;
+                minorYesAP.hidden = false;
+                otherYesAP.hidden = false;
+            }
+        }
+        function calculateScore(){
+            var average = 0;
+            var majorAverage = 0;
+            var minorAverage = 0;
+            var otherAverage = 0;
+            getGrades();
+
+            for(var i = 0; i<majorGrades.length; i++){
+                    majorAverage += majorGrades[i];
+                }
+            majorAverage /= majorGrades.length;
+
+            for(var i = 0; i<minorGrades.length; i++){
+                    minorAverage += minorGrades[i];
+                }
+            minorAverage /= minorGrades.length;
+
+            for(var i = 0; i<otherGrades.length; i++){
+                    otherAverage += otherGrades[i];
+                }
+            otherAverage /= otherGrades.length;
+
+            if(isAP == true){
+                average = majorAverage*0.7 + minorAverage * 0.2 + otherAverage * 0.1;
+            } else if(isAP == false){
+                average = majorAverage*0.6 + minorAverage * 0.3 + otherAverage * 0.1;
+            }
+
+            score.innerText = "Class Average: " + average;
+
+        }
+
+        function getGrades(){
+            majorGrades = [];
+            minorGrades = [];
+            otherGrades = [];
+
+            if(parseInt(majorText1.value) >= 0)
+                majorGrades.push(parseFloat(majorText1.value));
+            if(parseInt(majorText2.value) >= 0)
+                majorGrades.push(parseFloat(majorText2.value));
+            if(parseInt(majorText3.value) >= 0)
+                majorGrades.push(parseFloat(majorText3.value));
+            if(parseInt(majorText4.value) >= 0)
+                majorGrades.push(parseFloat(majorText4.value));
+            if(parseInt(majorText5.value) >= 0)
+                majorGrades.push(parseFloat(majorText5.value));
+            console.log("Major: " + majorGrades);
+
+            if(parseInt(minorText1.value) >= 0)
+                minorGrades.push(parseFloat(minorText1.value));
+            if(parseInt(minorText2.value) >= 0)
+                minorGrades.push(parseFloat(minorText2.value));
+            if(parseInt(minorText3.value) >= 0)
+                minorGrades.push(parseFloat(minorText3.value));
+            if(parseInt(minorText4.value) >= 0)
+                minorGrades.push(parseFloat(minorText4.value));
+            if(parseInt(minorText5.value) >= 0)
+                minorGrades.push(parseFloat(minorText5.value));
+            console.log("Minor: " + minorGrades);
+
+            if(parseInt(otherText1.value) >= 0)
+                otherGrades.push(parseFloat(otherText1.value));
+            if(parseInt(otherText2.value) >= 0)
+                otherGrades.push(parseFloat(otherText2.value));
+            if(parseInt(otherText3.value) >= 0)
+                otherGrades.push(parseFloat(otherText3.value));
+            if(parseInt(otherText4.value) >= 0)
+                otherGrades.push(parseFloat(otherText4.value));
+            if(parseInt(otherText5.value) >= 0)
+                otherGrades.push(parseFloat(otherText5.value));
+            console.log("Other: " + otherGrades);
+        }
+    </script>
+</body>
+</html>
